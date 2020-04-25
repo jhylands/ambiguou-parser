@@ -60,3 +60,17 @@ def test_next():
     print(head_list)
     assert all([isinstance(e, Primitive) for e in head_list])
     
+def test_primitive_eq():
+    class Sequence(Composite):
+        def __init__(self, parent=None, next_from_parent=None):
+            super(Sequence, self).__init__(parent, next_from_parent)
+            self.add_option([A])
+    class A(Primitive):
+        pass
+
+    a = A(Sequence(), None)
+    other_a = A(Sequence(), None)
+    assert A==A
+    assert a==a
+    assert a==other_a
+    assert a==A

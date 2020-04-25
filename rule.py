@@ -43,7 +43,13 @@ class Composite:
             return next_list
 
     def __str__(self):
-        return str(self.__class__)
+        return self.get_name()
+
+    def get_name(self):
+        return self.__class__.__name__
+
+    def __eq__(self, other):
+        return self.get_name() == other.get_name()
 
 
 class Primitive:
@@ -61,8 +67,18 @@ class Primitive:
         else:
             self.next_call = True
             return [self]
+
+    def get_name(self):
+        return self.__class__.__name__
+
+    def __eq__(self, other):
+        if isinstance(other, Primitive):
+            return self.get_name() == other.get_name()
+        elif type(other) is type:
+            return isinstance(self, other)
+
     def __repr__(self):
-        return "<" + str(self.__class__)[36:-2] + str(self.parent)[36:-2] + ">"
+        return "<" + self.get_name() + self.parent.get_name() + ">"
 
 class End(Primitive):
     def next(self):

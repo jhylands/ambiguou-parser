@@ -3,9 +3,17 @@ class Stack:
         # (Stack, Composite)->None
         # rule should be a parentless composite
         self.rule = rule
-        self.head_list = []
 
-    def pop(self):
-        # ()-> Generator(Primitive)
-        for head in self.head_list:
-            yield head.next()
+    def consume(self, tokens):
+        head_list = self.rule().next()
+        accept_stack = []
+        for token in tokens:
+            next_head_list = []
+            accept_list = []
+            for p in head_list:
+                if p == token:
+                    accept_list.append(p)
+                    next_head_list += p.next()
+            head_list = next_head_list
+            accept_stack.append(accept_list)
+        return accept_stack
