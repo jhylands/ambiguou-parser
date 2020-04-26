@@ -94,4 +94,3 @@ def test_primitive_privious():
     trace = list(ender.get_trace())
     print(trace)
     assert len(trace)>2
-    assert False

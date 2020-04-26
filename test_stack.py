@@ -37,5 +37,5 @@ def test_consume():
     input_string = [A, B, C, D, E, F]
     accept_stack = stack.consume(input_string)
     print(accept_stack)
-    assert len(accept_stack) == len(input_string)
-    assert all([len(row)>0 for row in accept_stack])
+    assert len(accept_stack) >0
+    assert all([len(row) == len(input_string) + 2 for row in accept_stack])

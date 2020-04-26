@@ -10,6 +10,7 @@ class Composite:
             self.top_level = False
             self.parent = parent
             self.next_index = index
+        self.prior = prior
         # Options is a list of token sequences
         self.options = []
         # Pointers will expand as the options are defined
@@ -19,9 +20,11 @@ class Composite:
         self.options.append(token_sequence)
         self.pointers.append(0)
 
-    def next(self, prior=None):
-        if prior is None:
+    def next(self):
+        if self.prior is None:
             prior = Start(self)
+        else:
+            prior = self.prior
         head_list = []
         for i in range(len(self.options)):
             head_list += self._next(i, prior)
