@@ -6,13 +6,13 @@ def test_next():
             super(Sequence, self).__init__(parent, next_from_parent)
             self.add_option([ABC, DEF])
     class ABC(Composite):
-        def __init__(self, parent=None, next_from_parent=None):
-            super(ABC, self).__init__(parent, next_from_parent)
+        def __init__(self, *args):
+            super(ABC, self).__init__(*args)
             self.add_option([A,B,C])
             self.add_option([B,C])
     class DEF(Composite):
-        def __init__(self, parent=None, next_from_parent=None):
-            super(DEF, self).__init__(parent, next_from_parent)
+        def __init__(self, *args):
+            super(DEF, self).__init__(*args)
             self.add_option([D,E,F])
     class A(Primitive):
         pass
@@ -67,10 +67,31 @@ def test_primitive_eq():
             self.add_option([A])
     class A(Primitive):
         pass
-
-    a = A(Sequence(), None)
-    other_a = A(Sequence(), None)
+    a = A(Sequence(), None, None)
+    other_a = A(Sequence(), None, None)
     assert A==A
     assert a==a
     assert a==other_a
     assert a==A
+
+def test_primitive_privious():
+    class Sequence(Composite):
+        def __init__(self, parent=None, next_from_parent=None):
+            super(Sequence, self).__init__(parent, next_from_parent)
+            self.add_option([A, B])
+    class A(Primitive):
+        pass
+    class B(Primitive):
+        pass
+    a = A(Sequence(), None, None)
+    b = B(Sequence(), None, A)
+    assert b.previous() == a
+
+    sequence = Sequence()
+    ender = sequence.next()[0].next()[0]
+    print(ender)
+    ender = ender.next()[0]
+    trace = list(ender.get_trace())
+    print(trace)
+    assert len(trace)>2
+    assert False

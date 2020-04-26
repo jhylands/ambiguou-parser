@@ -11,13 +11,13 @@ def test_consume():
             self.add_option([ABC, DEF])
             self.add_option([DEF])
     class ABC(Composite):
-        def __init__(self, parent=None, next_from_parent=None):
-            super(ABC, self).__init__(parent, next_from_parent)
+        def __init__(self, parent=None, next_from_parent=None, prior=None):
+            super(ABC, self).__init__(parent, next_from_parent, prior)
             self.add_option([A,B,C])
             self.add_option([B,C])
     class DEF(Composite):
-        def __init__(self, parent=None, next_from_parent=None):
-            super(DEF, self).__init__(parent, next_from_parent)
+        def __init__(self, parent=None, next_from_parent=None, prior=None):
+            super(DEF, self).__init__(parent, next_from_parent, prior)
             self.add_option([D,E,F])
             self.add_option([A])
             self.add_option([B, C, D])
