@@ -8,18 +8,17 @@ class Stack:
 
     def consume(self, tokens):
         head_list = self.rule().next()
-        accept_stack = []
         for token in tokens:
+            print(":Token::", token)
             next_head_list = []
-            accept_list = []
             if head_list == []:
                 raise Exception("String left unconsumed")
             for p in head_list:
+                print(":Prior:", p)
                 if p == token:
-                    accept_list.append(p)
                     next_head_list += p.next()
+                print("Head->", next_head_list)
             head_list = next_head_list
-            accept_stack.append(accept_list)
         accepted_states = [e for e in next_head_list if isinstance(e, End)]
         if accepted_states == []:
             raise Exception("String not accepted.")
